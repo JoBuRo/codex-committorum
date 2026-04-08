@@ -1,59 +1,61 @@
-# TDD Workflow Skill
+---
+name: tdd-workflow
+description: Use to implement a behavior change through the repo's preferred red-green-refactor workflow after the contract and first verifying test are already clear.
+---
+
+# TDD Workflow
 
 ## Purpose
 
-Use tests to verify interface behavior early, make assumptions reviewable, and drive changes in small, correct increments.
+Use this skill to execute a behavior change in small, verified increments.
 
-## When to apply
+This skill assumes that the relevant interface behavior is already understood and that the first meaningful verifying test has already been identified, usually via `contract-first-change`.
 
-Apply this workflow by default for:
+## Use this skill when
 
-- behavior changes
-- bug fixes
-- interface changes
+- implementing a bug fix after the contract is clear
+- implementing a behavior change after the contract is clear
+- implementing an interface change after the contract is clear
+- continuing work from an already reviewed failing test
 
-Do not require strict test-first for:
+## Do not use this skill for
 
-- mechanical refactors
-- scaffolding
-- non-behavioral structural work
+- deciding what the contract should be
+- purely mechanical refactors
+- scaffolding with no stable behavior yet
+- structural cleanup with no intended behavior change
 
 ## Workflow
 
-1. Identify the relevant interface or unit contract.
-2. State the intended behavior in concrete terms.
-3. Add or update the smallest failing test that verifies that behavior.
-4. Show the failing test early when collaborating with a human.
-5. Confirm that the failure is for the intended reason.
-6. Implement the minimum code required to make the test pass.
-7. Re-run the narrowest relevant test target.
-8. Refactor only if needed and only after behavior is green.
-9. Stop at the next sensible commit boundary.
+1. Start from the already identified failing test.
+2. Run the smallest relevant test target and confirm the failure is for the intended reason.
+3. Implement the minimum code required to make the test pass.
+4. Re-run the narrowest relevant tests first.
+5. Add the next narrowest meaningful test if more behavior remains.
+6. Refactor only after behavior is green.
+7. Stop at the next sensible commit boundary.
 
-## Test design rules
+## Rules
 
-- Test through the public interface.
-- Keep tests narrow in scope.
-- Prefer one behavior per test where practical.
-- Use mocks only at the unit boundary for dependencies not owned by the unit.
-- Do not mock internals.
-- Use regression tests for bug fixes.
-- Add integration or e2e tests when real collaboration across boundaries matters.
+- Prefer one behavior increment at a time.
+- Keep implementation minimal during green.
+- Do not mix unrelated refactors into the same increment.
+- Preserve focus on public interface behavior.
+- If the design materially impedes the change, pause and use `refactor-triage`.
+- If the contract is still unclear, return to `contract-first-change`.
 
-## Collaboration rules
+## Deliverable
 
-When working with a human:
+For each increment, provide:
 
-- present the test early
-- make assumptions visible in the test
-- use the test to validate expected behavior before implementation expands
-- revise the test if the contract or assumptions are wrong
+- behavior under verification
+- failing or newly added test
+- minimal implementation change
+- tests run
+- proposed next step or boundary
 
-Remember:
+## Notes
 
-- the interface defines the contract
-- the test verifies that the implementation satisfies the contract
-
-## Exceptions
-
-If strict test-first is not practical, state why explicitly and use the closest disciplined alternative.
+This skill does not define the contract.  
+The interface defines the contract.  
+The test verifies that the implementation satisfies it.

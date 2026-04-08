@@ -1,69 +1,66 @@
-# Commit Policy Skill
+---
+name: commit-policy
+description: Use when deciding commit boundaries, splitting mixed diffs, or writing commit messages for a completed increment.
+---
+
+# Commit Policy
 
 ## Purpose
 
-Produce commit history that is easy to review, understand, and revisit.
+Use this skill to keep changes atomic, reviewable, and historically useful.
 
-## Core rule
+A commit should contain one logical change and explain why that change was necessary.
 
-A commit should explain one logical change and why it was necessary.
+## Use this skill when
 
-## Commit boundaries
+- preparing a commit
+- deciding whether a patch is too broad
+- splitting a mixed diff
+- writing a commit message
+- deciding whether a preparatory refactor belongs in a separate commit
 
-Prefer a new commit when:
+## Rules
 
-- the next change addresses a different concern
-- a refactor prepares for a later behavior change
-- tests justify a distinct behavior change
-- unrelated cleanup would otherwise be mixed into the same diff
-
-Avoid mixing:
-
-- refactor + behavior change + incidental cleanup
-- rename/move + logic changes without a good reason
-- multiple unrelated bug fixes
-- formatting churn with semantic changes
+- One logical concern per commit.
+- Keep tests with the code they justify.
+- Avoid mixing behavior changes, refactors, and incidental cleanup.
+- Avoid rename-plus-logic-plus-formatting commits unless strongly justified.
+- Prefer multiple small commits over one mixed commit.
+- Keep history focused, explainable, and easy to review.
 
 ## Commit message rule
 
-Do not use the message to narrate the diff.
+The code shows what changed.  
+The commit message should explain why the change exists.
 
-Use it to explain:
-
-- what problem existed before the change
-- why the change was needed
-- how the chosen change addresses that problem
-
-Preferred structure:
+Use this structure:
 
 <title>
 
 Prior to this change, <problem or missing behavior>.
+
 This change <how the patch addresses it>.
-
-## Examples
-
-Good:
-
-Reject empty input in parser
-
-Prior to this change, the parser accepted empty input and failed later
-with a less specific error during token processing.
-This change rejects empty input at the parser boundary and adds a
-regression test for the expected error.
-
-Bad:
-
-fix parser
-update tests
-cleanup
-misc changes
 
 ## Review questions
 
 Before finalizing a commit, check:
 
 1. Is this one logical concern?
-2. Would a reviewer understand why every changed file belongs here?
-3. Does the message explain why this change exists?
-4. Could part of this diff be split into a clearer separate commit?
+2. Would a reviewer understand why every changed file belongs?
+3. Does the message explain why the change exists?
+4. Should preparatory refactoring be split from behavior change?
+5. Is any cleanup better folded into a previous commit via fixup or amend?
+
+## Deliverable
+
+Provide:
+
+- proposed commit boundary
+- rationale for the boundary
+- commit message
+- suggested split if the diff is mixed
+
+## Notes
+
+This skill governs commit slicing and rationale preservation.  
+It does not define implementation workflow or contract design.

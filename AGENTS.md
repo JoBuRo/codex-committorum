@@ -53,10 +53,11 @@ For behavior changes, bug fixes, and interface changes:
 1. Identify the relevant interface behavior or contract.
 2. Write or update the narrowest meaningful failing test that verifies that behavior.
 3. Show the failing test before implementation when practical, especially for behavior changes, bug fixes, and interface changes.
-4. Implement the minimum change required to make the test pass.
-5. Run the narrowest relevant test set first.
-6. Refactor only if the current design materially impedes the change.
-7. Keep the change at a sensible commit boundary.
+4. Confirm that the test reflects the intended contract.
+5. Implement the minimum change required to make the test pass.
+6. Run the narrowest relevant test set first.
+7. Refactor only if the current design materially impedes the change.
+8. Keep the change at a sensible commit boundary.
 
 For mechanical refactors or scaffolding:
 
@@ -114,4 +115,17 @@ Commit message template:
 Prior to this change, <problem or missing behavior>.
 
 This change <how the patch addresses it>.
+
 ```
+
+## Skill usage
+
+Use the skills under `.agents/skills/` as follows:
+
+- `contract-first-change`: use first for behavior changes, bug fixes, and interface changes to identify the contract and prepare the first verifying test.
+- `tdd-workflow`: use after the contract and first verifying test are clear, to implement the change in small red/green/refactor steps.
+- `refactor-triage`: use when the current design makes the change materially harder and it is unclear whether a preparatory refactor is justified.
+- `commit-policy`: use when deciding commit boundaries, splitting mixed diffs, or writing commit messages.
+
+Do not use `tdd-workflow` to decide what the contract should be.  
+Do not use `contract-first-change` as the full implementation workflow.
